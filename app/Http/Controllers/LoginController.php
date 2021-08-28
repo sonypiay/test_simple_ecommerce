@@ -63,7 +63,7 @@ class LoginController extends Controller
       {
         $checkCredential = Users::checkCredential( $password, $get_user_exists->password );
 
-        if( $get_user_exists->publish == 'Y'  )
+        if( $get_user_exists->publish == 'N'  )
         {
           $this->status_message = 'Akun anda telah dinonaktifkan.';
           $this->status_alert   = 'error';

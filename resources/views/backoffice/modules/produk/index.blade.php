@@ -37,6 +37,7 @@
               <th>Aksi</th>
               <th>Kode Produk</th>
               <th>Nama Produk</th>
+              <th>Harga</th>
               <th class="uk-width-small">Foto</th>
               <th>Tanggal Input</th>
             </tr>
@@ -50,6 +51,7 @@
                 </td>
                 <td>{{ $data->product_code }}</td>
                 <td>{{ $data->product_name }}</td>
+                <td>Rp. {{ number_format( $data->price ) }}</td>
                 <td>
                   <img src="{{ asset('storage/produk/' . $data->product_image) }}" alt="" class="uk-width-1-2" />
                 </td>

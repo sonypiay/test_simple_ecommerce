@@ -57,4 +57,14 @@ Route::group(['prefix' => 'backoffice', 'as' => 'backoffice.', 'middleware' => [
     Route::post('/update/{id}', 'BackOffice\UserController@storeOrUpdate')->name('update');
     Route::put('/set_status/{id?}', 'BackOffice\UserController@setStatus')->name('set_status');
   });
+
+  Route::group(['prefix' => 'profile', 'as' => 'profile.'], function() {
+    Route::get('/', 'BackOffice\ProfileController@index')->name('index');
+    Route::post('/update', 'BackOffice\ProfileController@update')->name('update');
+  });
+
+  Route::group(['prefix' => 'change_password', 'as' => 'change_password.'], function() {
+    Route::get('/', 'BackOffice\ChangePasswordController@index')->name('index');
+    Route::post('/update', 'BackOffice\ChangePasswordController@update')->name('update');
+  });
 });
