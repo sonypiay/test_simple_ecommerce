@@ -38,6 +38,7 @@
               @endif
             </td>
           </tr>
+          @if( $getResult->id != \Session::get('user_detail')['id'] )
           <tr>
             <td class="uk-width-medium">Ubah Status Aktif</td>
             <td>
@@ -47,6 +48,7 @@
               </select>
             </td>
           </tr>
+          @endif
         </tbody>
       </table>
 

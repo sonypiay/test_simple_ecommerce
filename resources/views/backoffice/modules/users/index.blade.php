@@ -56,8 +56,10 @@
                 <td>
                   <a href="{{ route('backoffice.users.view', ['id' => $data->id]) }}" class="uk-icon-button" uk-icon="forward"></a>
                   @if( $user_type == 'admin' )
-                    <a href="{{ route('backoffice.users.edit_page', ['id' => $data->id]) }}" class="uk-icon-button" uk-icon="pencil"></a>
-                    <a onclick="onDelete(`{{ $data->id }}`, `{{ $data->nama }}`)" class="uk-icon-button" uk-icon="trash"></a>
+                    @if( $data->id != \Session::get('user_detail')['id'] )
+                      <a href="{{ route('backoffice.users.edit_page', ['id' => $data->id]) }}" class="uk-icon-button" uk-icon="pencil"></a>
+                      <a onclick="onDelete(`{{ $data->id }}`, `{{ $data->nama }}`)" class="uk-icon-button" uk-icon="trash"></a>
+                    @endif
                   @endif
                 </td>
                 <td>{{ $data->nama }}</td>
