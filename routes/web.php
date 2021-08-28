@@ -29,6 +29,16 @@ Route::group(['as' => 'frontend.'], function() {
   Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => ['check_user_login', 'is_role_user']], function() {
     Route::get('/', function() { return redirect()->route('frontend.user.home'); });
     Route::get('/home', 'Frontend\HomeController@index')->name('home');
+
+    Route::group(['prefix' => 'profile', 'as' => 'profile.'], function() {
+      Route::get('/', 'Frontend\ProfileController@index')->name('index');
+      Route::post('/update', 'Frontend\ProfileController@update')->name('update');
+    });
+
+    Route::group(['prefix' => 'change_password', 'as' => 'change_password.'], function() {
+      Route::get('/', 'Frontend\ChangePasswordController@index')->name('index');
+      Route::post('/update', 'Frontend\ChangePasswordController@update')->name('update');
+    });
   });
 });
 
