@@ -16,12 +16,14 @@ class CreateUsersTable extends Migration
         Schema::create('t_users', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nama');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('password');
+            $table->enum('publish', ['Y', 'N'])->default('Y');
             $table->enum('roles', ['admin', 'user']);
             $table->timestamps();
 
             $table->engine = 'InnoDB';
+            $table->unique(['email', 'roles']);
         });
     }
 

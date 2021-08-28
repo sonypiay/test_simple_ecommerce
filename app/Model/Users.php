@@ -21,8 +21,8 @@ class Users extends Model
     $model = self::where(function( $query ) use ( $keywords ) {
       if( ! empty( $keywords ) )
       {
-        $query->where( 'product_code', 'like', '%' . $keywords . '%' )
-        ->orWhere('product_name', 'like', '%' . $keywords . '%');
+        $query->where( 'nama', 'like', '%' . $keywords . '%' )
+        ->orWhere('email', 'like', '%' . $keywords . '%');
       }
     })
     ->where('roles', $user_type)
@@ -62,10 +62,13 @@ class Users extends Model
 
   public static function getDetail( $user_id = null )
   {
-    if( Session::has('user_detail') )
+    if( empty( $user_id ) )
     {
-      $get_user = Session::get('user_detail');
-      $user_id  = $get_user['id'];
+      if( Session::has('user_detail') )
+      {
+        $get_user = Session::get('user_detail');
+        $user_id  = $get_user['id'];
+      }
     }
 
     $result = self::where('id', $user_id)->first();

@@ -50,9 +50,11 @@ Route::group(['prefix' => 'backoffice', 'as' => 'backoffice.', 'middleware' => [
     Route::get('/', 'BackOffice\UserController@index')->name('index');
     Route::get('/create', 'BackOffice\UserController@createOrEdit')->name('create_page');
     Route::get('/edit/{id}', 'BackOffice\UserController@createOrEdit')->name('edit_page');
+    Route::get('/detail/{id}', 'BackOffice\UserController@detail')->name('view');
     Route::get('/delete/{id?}', 'BackOffice\UserController@destroy')->name('delete');
 
     Route::post('/store', 'BackOffice\UserController@storeOrUpdate')->name('store');
     Route::post('/update/{id}', 'BackOffice\UserController@storeOrUpdate')->name('update');
+    Route::put('/set_status/{id?}', 'BackOffice\UserController@setStatus')->name('set_status');
   });
 });

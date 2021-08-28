@@ -32,6 +32,22 @@ class UserController extends Controller
     return $this->responseView( $module_view, $data );
   }
 
+  public function detail( $id )
+  {
+    $getResult    = Users::getDetail( $id );
+
+    if( ! $getResult ) abort(404);
+
+    $module_view  = $this->module_view . '.detail';
+
+    $data = [
+      'title_page'  => 'Detail User',
+      'getResult'   => $getResult,
+    ];
+
+    return $this->responseView( $module_view, $data );
+  }
+
   public function createOrEdit( Request $request, $id = null )
   {
     $getResult    = null;
@@ -45,6 +61,13 @@ class UserController extends Controller
       $action_name  = 'update';
       $url_action   = route('backoffice.users.update', ['id' => $id]);
       $title_page   = 'Edit Admin - ' . $getResult->nama;
+
+      if( $getResult->roles == 'user' )
+      {
+        return redirect()->route('backoffice.users.index', [
+          'user_type' => 'user'
+        ]);
+      }
     }
 
     $module_view  = $this->module_view . '.create_edit';
@@ -61,25 +84,33 @@ class UserController extends Controller
 
   public function storeOrUpdate( Request $request, $id = null )
   {
-    $user_id    = $this->generateUuid();
-    $nama       = $request->nama;
-    $email      = $request->email;
-    $password   = $request->password;
-    $publish    = $request->publish;
-    $roles      = 'admin';
+    $user_id      = $this->generateUuid();
+    $nama         = $request->nama;
+    $email        = $request->email;
+    $password     = $request->password;
+    $publish      = $request->publish;
+    $action_name  = $request->action_name;
+    $roles        = 'admin';
 
     if( empty( $id ) )
     {
-      $response = redirect()->route('backoffice.users.create_page')->withInput();
+      $response = redirect()->route('backoffice.users.create_page', [
+        'user_type' => $roles
+      ])
+      ->withInput();
     }
     else
     {
-      $response = redirect()->route('backoffice.users.edit_page', ['id' => $id])->withInput();
+      $response = redirect()->route('backoffice.users.edit_page', [
+        'id'        => $id,
+        'user_type' => $roles,
+      ])
+      ->withInput();
     }
 
     try
     {
-      $check_email = Users::checkEmailExist( $email, 'admin', $id );
+      $check_email = Users::checkEmailExist( $email, $roles, $id );
 
       if( $check_email === true )
       {
@@ -100,14 +131,29 @@ class UserController extends Controller
 
         $model->nama      = $nama;
         $model->email     = $email;
-        $model->password  = $this->makeHash( $password );
         $model->publish   = $publish;
+        $model->roles     = $roles;
+
+        if( $action_name == 'store' )
+        {
+          $model->password  = $this->makeHash( $password );
+        }
+        else
+        {
+          if( ! empty( $password ) )
+          {
+            $model->password  = $this->makeHash( $password );
+          }
+        }
+
         $model->save();
 
         $this->status_message = 'Data berhasil disimpan';
         $this->status_alert   = 'success';
 
-        $response = redirect()->route('backoffice.users.index');
+        $response = redirect()->route('backoffice.users.index', [
+          'user_type' => $roles,
+        ]);
       }
     }
     catch (\Exception $e)
@@ -124,7 +170,8 @@ class UserController extends Controller
 
   public function destroy( Request $request, $id = null )
   {
-    $id = $id === null ? $request->id : $id;
+    $id         = $id === null ? $request->id : $id;
+    $user_type  = $request->user_type ? $request->user_type : '';
 
     try
     {
@@ -146,6 +193,45 @@ class UserController extends Controller
     Session::flash( 'message', $this->status_message );
     Session::flash( 'alert', $this->status_alert );
 
-    return redirect()->route('backoffice.users.index');
+    return redirect()->route('backoffice.users.index', [
+      'user_type' => $user_type,
+    ]);
+  }
+
+  public function setStatus( Request $request, $id = null )
+  {
+    $id     = $id === null ? $request->id : $id;
+    $status = $request->status;
+
+    try
+    {
+      $getResult  = Users::find( $id );
+
+      if( $getResult )
+      {
+        $getResult->publish = $status;
+        $getResult->save();
+
+        $this->status_alert   = 201;
+        $this->status_message = 'Success';
+      }
+      else
+      {
+        $this->status_alert   = 404;
+        $this->status_message = 'Not Found';
+      }
+    }
+    catch (\Exception $e)
+    {
+      $this->status_message = $this->showError( $e->getLine(), $e->getMessage() );
+      $this->status_alert   = 500;
+    }
+
+    $response = [
+      'status_code'     => $this->status_alert,
+      'status_message'  => $this->status_message,
+    ];
+
+    return $this->responseJson( $response, $this->status_alert );
   }
 }

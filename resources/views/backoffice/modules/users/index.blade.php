@@ -36,7 +36,7 @@
       <div class="uk-margin">
         @if( $getResult->total() == 0 )
           <div class="uk-alert-warning uk-margin" uk-alert>
-            Belum ada users
+            Tidak ada data.
           </div>
         @endif
 
@@ -46,6 +46,7 @@
               <th>Aksi</th>
               <th>Nama Lengkap</th>
               <th>Email</th>
+              <th>Tampilkan</th>
               <th>Tanggal Registrasi</th>
             </tr>
           </thead>
@@ -53,13 +54,21 @@
             @foreach( $getResult as $data )
               <tr>
                 <td>
-                  <a href="{{ route('backoffice.users.edit_page', ['id' => $data->id]) }}" class="uk-icon-button" uk-icon="pencil"></a>
+                  <a href="{{ route('backoffice.users.view', ['id' => $data->id]) }}" class="uk-icon-button" uk-icon="forward"></a>
                   @if( $user_type == 'admin' )
+                    <a href="{{ route('backoffice.users.edit_page', ['id' => $data->id]) }}" class="uk-icon-button" uk-icon="pencil"></a>
                     <a onclick="onDelete(`{{ $data->id }}`, `{{ $data->nama }}`)" class="uk-icon-button" uk-icon="trash"></a>
                   @endif
                 </td>
                 <td>{{ $data->nama }}</td>
                 <td>{{ $data->email }}</td>
+                <td>
+                  @if( $data->publish == 'Y' )
+                    <label class="uk-label uk-label-success">Ya</label>
+                  @else
+                    <label class="uk-label uk-label-danger">Tidak</label>
+                  @endif
+                </td>
                 <td>{{ $data->created_at->format('d M Y H:i') }}</td>
               </tr>
             @endforeach
@@ -74,13 +83,13 @@
     {
       swal({
         title: 'Konfirmasi',
-        text: `Apakah anda ingin menghapus produk ${name}?`,
+        text: `Apakah anda ingin menghapus user ${name}?`,
         icon: 'warning',
         buttons: true
       }).then( willConfirm => {
         if( willConfirm )
         {
-          let url = `{{ route('backoffice.product.delete') }}?id=${id}`;
+          let url = `{{ route('backoffice.users.delete') }}?id=${id}&user_type={{ $user_type }}`;
           document.location = url;
         }
       });

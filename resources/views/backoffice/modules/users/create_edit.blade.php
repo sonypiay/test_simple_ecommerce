@@ -27,7 +27,7 @@
         <div class="uk-margin">
           <label class="uk-form-label">Nama Lengkap</label>
           <div class="uk-form-controls">
-            <input type="text" class="uk-width-1-1 uk-input" id="nama_lengkap" name="nama_lengkap" value="{{ $getResult ? $getResult->nama : request()->old('nama') }}">
+            <input type="text" class="uk-width-1-1 uk-input" id="nama" name="nama" value="{{ $getResult ? $getResult->nama : request()->old('nama') }}">
           </div>
           <div id="error-nama"></div>
         </div>
@@ -43,7 +43,7 @@
         <div class="uk-margin">
           <label class="uk-form-label">Password</label>
           <div class="uk-form-controls">
-            <input type="password" class="uk-width-1-1 uk-input" name="password" value="{{ $getResult ? $getResult->password : old('password') }}" id="password" />
+            <input type="password" class="uk-width-1-1 uk-input" name="password" value="{{ old('password') }}" id="password" />
           </div>
           <div id="error-password"></div>
         </div>
@@ -60,7 +60,7 @@
 
         <div class="uk-margin">
           <button type="submit" class="uk-button uk-button-primary">Simpan</button>
-          <a href="{{ route('backoffice.users.index') }}" class="uk-button uk-button-default">Kembali</a>
+          <a href="{{ route('backoffice.users.index') }}?user_type=admin" class="uk-button uk-button-default">Kembali</a>
         </div>
 
       </form>

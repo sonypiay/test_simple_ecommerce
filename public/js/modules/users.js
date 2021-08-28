@@ -4,12 +4,12 @@ let onValidateCreateOrUpdate = function( action_name )
   var errorMessage  = `Harap diisi`;
 
   var nama      = document.querySelector('#nama');
-  var email     = document.querySelector('#nama_produk');
+  var email     = document.querySelector('#email');
   var password  = document.querySelector('#password');
 
-  var error_nama   = document.querySelector('#error-kode-produk');
-  var error_email   = document.querySelector('#error-nama-produk');
-  var error_password   = document.querySelector('#error-foto-produk');
+  var error_nama   = document.querySelector('#error-nama');
+  var error_email   = document.querySelector('#error-email');
+  var error_password   = document.querySelector('#error-password');
 
   error_nama.innerHTML      = '';
   error_email.innerHTML     = '';

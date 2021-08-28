@@ -27,7 +27,7 @@
       <div class="uk-margin">
         @if( $getProduct->total() == 0 )
           <div class="uk-alert-warning uk-margin" uk-alert>
-            Belum ada produk yang ditambahkan.
+            Tidak ada data.
           </div>
         @endif
 
