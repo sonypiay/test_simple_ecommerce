@@ -27,7 +27,7 @@
         <div class="uk-margin">
           <label class="uk-form-label">Kode Produk</label>
           <div class="uk-form-controls">
-            <input type="text" class="uk-width-1-1 uk-input" id="kode_produk" name="kode_produk" value="{{ $getResult ? $getResult->product_code : request()->old('kode_produk') }}">
+            <input type="text" class="uk-width-1-1 uk-input" id="kode_produk" name="kode_produk" value="{{ $getResult ? $getResult->product_code : request()->old('kode_produk') }}" maxlength="10">
           </div>
           <div id="error-kode-produk"></div>
         </div>
