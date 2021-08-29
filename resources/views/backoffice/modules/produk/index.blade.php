@@ -39,6 +39,7 @@
               <th>Nama Produk</th>
               <th>Harga</th>
               <th class="uk-width-small">Foto</th>
+              <th>Tampilkan</th>
               <th>Tanggal Input</th>
             </tr>
           </thead>
@@ -54,6 +55,13 @@
                 <td>Rp. {{ number_format( $data->price ) }}</td>
                 <td>
                   <img src="{{ asset('storage/produk/' . $data->product_image) }}" alt="" class="uk-width-1-2" />
+                </td>
+                <td>
+                  @if( $data->publish == 'Y' )
+                    <label class="uk-label uk-label-success">Ya</label>
+                  @else
+                    <label class="uk-label uk-label-danger">Tidak</label>
+                  @endif
                 </td>
                 <td>{{ $data->created_at->format('d M Y H:i') }}</td>
               </tr>

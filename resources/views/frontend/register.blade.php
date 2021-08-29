@@ -12,7 +12,7 @@
           </div>
         @endif
 
-        <form class="uk-form-stacked" method="post" action="{{ route('frontend.register.create') }}" onsubmit="return Users.onValidateUserRegiter();">
+        <form class="uk-form-stacked" method="post" action="{{ route('register.create') }}" onsubmit="return Users.onValidateUserRegiter();">
           {{ csrf_field() }}
 
           <div class="uk-margin">
@@ -43,7 +43,7 @@
             <input type="submit" class="uk-width-1-1 uk-button uk-button-primary" value="Registrasi">
           </div>
           <div class="uk-margin-top uk-text-center">
-            <a href="{{ route('frontend.login.index') }}">Sudah punya akun? Login disini</a>
+            <a href="{{ route('login.index', ['roles' => 'user']) }}">Sudah punya akun? Login disini</a>
           </div>
         </form>
       </div>

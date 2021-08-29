@@ -11,7 +11,7 @@ class Product extends Model
   protected $primaryKey = 'id';
   protected $table      = 't_product';
 
-  public static function getAll( $keywords = '' )
+  public static function getAll( $roles = 'user', $keywords = '' )
   {
     $params = [
       'keywords'    => $keywords,
@@ -23,8 +23,14 @@ class Product extends Model
         $query->where( 'product_code', 'like', '%' . $keywords . '%' )
         ->orWhere('product_name', 'like', '%' . $keywords . '%');
       }
-    })
-    ->orderBy('created_at', 'desc')
+    });
+
+    if( $roles == 'user' )
+    {
+      $model = $model->where('publish', 'Y');
+    }
+
+    $model = $model->orderBy('created_at', 'desc')
     ->paginate(10)
     ->appends( $params );
 

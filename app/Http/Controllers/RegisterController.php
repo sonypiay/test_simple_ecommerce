@@ -27,7 +27,7 @@ class RegisterController extends Controller
 
   public function doRegister( Request $request )
   {
-    $response   = redirect()->route('frontend.register.index');
+    $response   = redirect()->route('register.index');
     $user_id    = $this->generateUuid();
     $nama       = $request->fullname;
     $email      = $request->email;

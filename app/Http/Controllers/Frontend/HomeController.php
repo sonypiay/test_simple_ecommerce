@@ -20,7 +20,7 @@ class HomeController extends Controller
 
     $module_view    = $this->module_view . '.home';
     $getUserDetail  = Users::getDetail();
-    $getProduct     = Product::getAll( $keywords );
+    $getProduct     = Product::getAll( 'user', $keywords );
 
     $data = [
       'title_page'    => 'Home',

@@ -20,13 +20,14 @@ Route::group(['as' => 'login.'], function() {
   Route::post('/dologin', 'LoginController@doLogin')->name('dologin');
 });
 
+Route::group(['prefix' => 'register', 'as' => 'register.'], function() {
+  Route::get('/', 'RegisterController@index')->name('index');
+  Route::post('/create', 'RegisterController@doRegister')->name('create');
+});
+
 Route::get('/logout', 'LoginController@doLogout')->name('dologout');
 
 Route::group(['as' => 'frontend.'], function() {
-  Route::group(['prefix' => 'register', 'as' => 'register.'], function() {
-    Route::get('/', 'RegisterController@index')->name('index');
-    Route::post('/create', 'RegisterController@doRegister')->name('create');
-  });
 
   Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => ['check_user_login', 'is_role_user']], function() {
     Route::get('/', function() { return redirect()->route('frontend.user.home'); });

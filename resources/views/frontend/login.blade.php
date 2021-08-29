@@ -36,7 +36,7 @@
             <input type="submit" class="uk-width-1-1 uk-button uk-button-primary" value="Login">
           </div>
           <div class="uk-margin-top uk-text-center">
-            <a href="{{ route('frontend.register.index') }}">Belum punya akun? Registrasi disini</a>
+            <a href="{{ route('register.index') }}">Belum punya akun? Registrasi disini</a>
           </div>
         </form>
       </div>

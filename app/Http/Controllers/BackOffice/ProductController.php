@@ -22,7 +22,7 @@ class ProductController extends Controller
   {
     $keywords     = $request->keywords;
     $module_view  = $this->module_view . '.index';
-    $getProduct   = Product::getAll( $keywords );
+    $getProduct   = Product::getAll( 'admin', $keywords );
 
     $data = [
       'title_page'  => 'Produk',
