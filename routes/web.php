@@ -13,14 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function() { return redirect()->route('login.index', ['roles' => 'user']); });
+
+Route::group(['as' => 'login.'], function() {
+  Route::get('/login/{roles?}', 'LoginController@index')->name('index');
+  Route::post('/dologin', 'LoginController@doLogin')->name('dologin');
+});
+
 Route::get('/logout', 'LoginController@doLogout')->name('dologout');
 
 Route::group(['as' => 'frontend.'], function() {
-  Route::group(['as' => 'login.'], function() {
-    Route::get('/', 'LoginController@index')->name('index');
-    Route::post('/dologin', 'LoginController@doLogin')->name('dologin');
-  });
-
   Route::group(['prefix' => 'register', 'as' => 'register.'], function() {
     Route::get('/', 'RegisterController@index')->name('index');
     Route::post('/create', 'RegisterController@doRegister')->name('create');
@@ -55,6 +57,12 @@ Route::group(['as' => 'frontend.'], function() {
 });
 
 Route::group(['prefix' => 'backoffice', 'as' => 'backoffice.', 'middleware' => ['check_user_login', 'is_role_admin']], function() {
+
+  Route::group(['as' => 'login.'], function() {
+    Route::get('/', 'BackOffice\LoginController@index')->name('index');
+    Route::post('/dologin', 'BackOffice\LoginController@doLogin')->name('dologin');
+  });
+
   Route::get('/', function() { return redirect()->route('backoffice.dashboard'); });
   Route::get('/dashboard', 'BackOffice\DashboardController@index')->name('dashboard');
 
@@ -91,6 +99,7 @@ Route::group(['prefix' => 'backoffice', 'as' => 'backoffice.', 'middleware' => [
   });
 
   Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function() {
+    Route::get('/export_xls', 'BackOffice\TransactionController@exportToExcel')->name('export_xls');
     Route::get('/{transaction_id?}', 'BackOffice\TransactionController@index')->name('index');
   });
 });

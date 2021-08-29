@@ -1,10 +1,10 @@
-@extends('frontend.layout.master')
+@extends('backoffice.layout.master')
 @section('meta_title', $title_page)
 @section('main_content')
   <div class="uk-container">
     <div class="uk-width-1-3@s uk-align-center">
       <div class="uk-card uk-card-body uk-card-default uk-margin-large-top">
-        <h3 class="uk-text-center">Login</h3>
+        <h3 class="uk-text-center">Login Administrator</h3>
 
         @if( \Session::has('alert') AND ! empty( \Session::get('alert') ) )
           <div class="uk-alert-{{ \Session::get('alert') == 'error' ? 'danger' : 'success' }}" uk-alert>
@@ -14,7 +14,7 @@
 
         <form class="uk-form-stacked" method="post" action="{{ route('login.dologin') }}" onsubmit="return Users.onValidateLogin();">
           {{ csrf_field() }}
-          <input type="hidden" name="user_type" value="user" />
+          <input type="hidden" name="user_type" value="admin" />
 
           <div class="uk-margin">
             <label class="uk-form-label">Email</label>
@@ -34,9 +34,6 @@
 
           <div class="uk-margin">
             <input type="submit" class="uk-width-1-1 uk-button uk-button-primary" value="Login">
-          </div>
-          <div class="uk-margin-top uk-text-center">
-            <a href="{{ route('frontend.register.index') }}">Belum punya akun? Registrasi disini</a>
           </div>
         </form>
       </div>

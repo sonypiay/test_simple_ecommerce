@@ -7,4 +7,4 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
-<script src="{{ asset('js/app-backoffice.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/app.js') }}" type="text/javascript"></script>

@@ -18,7 +18,7 @@ class CheckUserLogin
     {
       if( ! Session::has('user_detail') )
       {
-        $response = redirect()->route('frontend.login.index');
+        $response = redirect()->route('login.index');
       }
       else
       {

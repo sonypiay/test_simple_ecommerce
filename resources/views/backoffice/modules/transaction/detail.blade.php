@@ -56,6 +56,12 @@
           @endforeach
         </tbody>
       </table>
+
+      <div class="uk-margin">
+        <a href="{{ route('backoffice.transaction.index') }}" class="uk-button uk-button-small uk-button-primary">
+          Kembali
+        </a>
+      </div>
     </div>
   </div>
 @endsection

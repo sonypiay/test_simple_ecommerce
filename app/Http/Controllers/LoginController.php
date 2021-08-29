@@ -12,11 +12,10 @@ class LoginController extends Controller
 {
   use HelperFunction;
 
-  private $module_view    = 'frontend';
   private $status_message = '';
   private $status_alert   = '';
 
-  public function index()
+  public function index( $roles = 'user' )
   {
     if( Session::has('user_detail') )
     {
@@ -34,19 +33,21 @@ class LoginController extends Controller
       return $response;
     }
 
-    $data = [
-      'title_page' => 'Login User',
-    ];
+    $data = [ 'title_page' => 'Login' ];
 
-    return response()->view( $this->module_view . '.login', $data );
+    $module_view  = $roles == 'user'
+    ? 'frontend.login'
+    : 'backoffice.login';
+
+    return response()->view( $module_view, $data );
   }
 
   public function doLogin( Request $request )
   {
-    $response   = redirect()->route('frontend.login.index');
     $email      = $request->email;
     $password   = $request->password;
     $user_type  = $request->user_type ? $request->user_type : 'admin';
+    $response   = redirect()->route('login.index', ['roles' => $user_type]);
 
     $get_user_exists = Users::checkEmailExist( $email, $user_type );
 
@@ -102,11 +103,18 @@ class LoginController extends Controller
 
   public function doLogout()
   {
+    $roles = 'user';
+
     if( Session::has('user_detail') )
     {
+      $get_user_detail = Session::get('user_detail');
+      $roles  = $get_user_detail['roles'];
+
       Session::forget('user_detail');
     }
 
-    return redirect()->route('frontend.login.index');
+    return redirect()->route('login.index', [
+      'roles' => $roles
+    ]);
   }
 }

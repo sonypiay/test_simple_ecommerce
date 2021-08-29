@@ -49,6 +49,7 @@
           <thead>
             <tr>
               <th>No. Transaksi</th>
+              <th>Produk</th>
               <th>Foto</th>
               <th>Qty</th>
               <th>Subtotal</th>
@@ -63,6 +64,7 @@
                     {{ $item->transaction_no }}
                   </a>
                 </td>
+                <td>{{ $item->product_name }}</td>
                 <td class="uk-width-small">
                   <img class="uk-width-1-3" src="{{ asset('storage/produk/' . $item->product_image) }}" alt="" />
                 </td>
