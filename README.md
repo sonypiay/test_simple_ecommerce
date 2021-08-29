@@ -1,7 +1,8 @@
 ## How to Run
 - jalankan perintah `composer install`
 - copy `.env.example`kedalam file `.env`.
-- jalankan perintah `php artisan key:generate --ansi`
+- jalankan perintah `php artisan key:generate --ansi` untuk generate csrf token
+- jalankan perintah `php artisan storage:link` untuk melink folder storage
 - jalankan perintah `php artisan migrate` untuk schema database
 - jalankan perintah `php artisan db:seed` untuk generate dummy user
 - jalankan perintah  `php artisan serve` untuk menjalankan webserver dev dan buka localhost:8000 (default)
