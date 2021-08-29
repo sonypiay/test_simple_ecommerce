@@ -76,6 +76,21 @@
             @endforeach
           </tbody>
         </table>
+
+        <div class="uk-margin">
+          <ul class="uk-pagination">
+            <li>
+              <a class="uk-button uk-button-small uk-button-default" href="{{ $getResult->previousPageUrl() }}">
+                <span uk-icon="chevron-left"></span>
+              </a>
+            </li>
+            <li>
+              <a class="uk-button uk-button-small uk-button-default" href="{{ $getResult->nextPageUrl() }}">
+                <span uk-icon="chevron-right"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

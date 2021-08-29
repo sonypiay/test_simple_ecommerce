@@ -18,8 +18,9 @@ class CreateAtCartsTable extends Migration
             $table->uuid('ref_cart_id');
             $table->uuid('ref_product_id');
             $table->unsignedSmallInteger('qty')->default(1);
-            $table->unsignedInteger('price')->default(0);
-            $table->unsignedTinyInteger('sort');
+            $table->unsignedBigInteger('price')->default(0);
+            $table->unsignedBigInteger('subtotal_price')->default(0);
+            $table->timestamps();
 
             $table->engine = 'InnoDB';
 

@@ -39,6 +39,18 @@ Route::group(['as' => 'frontend.'], function() {
       Route::get('/', 'Frontend\ChangePasswordController@index')->name('index');
       Route::post('/update', 'Frontend\ChangePasswordController@update')->name('update');
     });
+
+    Route::group(['prefix' => 'carts', 'as' => 'carts.'], function() {
+      Route::get('/', 'Frontend\CartsController@index')->name('index');
+      Route::get('/checkout/{cart_id}', 'Frontend\CartsController@checkout')->name('checkout');
+      Route::post('/add_cart', 'Frontend\CartsController@storeOrUpdate')->name('store');
+      Route::put('/update_qty', 'Frontend\CartsController@updateQty')->name('update_qty');
+      Route::delete('/delete/{item_id?}', 'Frontend\CartsController@deleteItem')->name('delete_item');
+    });
+
+    Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function() {
+      Route::get('/{transaction_id?}', 'Frontend\TransactionController@index')->name('index');
+    });
   });
 });
 
@@ -76,5 +88,9 @@ Route::group(['prefix' => 'backoffice', 'as' => 'backoffice.', 'middleware' => [
   Route::group(['prefix' => 'change_password', 'as' => 'change_password.'], function() {
     Route::get('/', 'BackOffice\ChangePasswordController@index')->name('index');
     Route::post('/update', 'BackOffice\ChangePasswordController@update')->name('update');
+  });
+
+  Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function() {
+    Route::get('/{transaction_id?}', 'BackOffice\TransactionController@index')->name('index');
   });
 });

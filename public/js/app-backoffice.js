@@ -5,3 +5,9 @@ let divAlertMessage = function(message, alert)
     ${message}
   </div>`;
 }
+
+let formatDate = function(date, format) {
+  if( format === undefined ) format = 'YYYY-MM-DD';
+  
+  return dayjs(date).format(format);
+};

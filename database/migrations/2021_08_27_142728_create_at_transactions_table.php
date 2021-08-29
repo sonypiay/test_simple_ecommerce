@@ -17,7 +17,8 @@ class CreateAtTransactionsTable extends Migration
             $table->uuid('ref_transaction_id');
             $table->uuid('ref_product_id');
             $table->unsignedSmallInteger('qty')->default(1);
-            $table->unsignedInteger('price')->default(0);
+            $table->unsignedBigInteger('price')->default(0);
+            $table->unsignedBigInteger('subtotal_price')->default(0);
             $table->unsignedTinyInteger('sort');
 
             $table->engine = 'InnoDB';

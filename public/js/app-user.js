@@ -6,6 +6,18 @@ let divAlertMessage = function(message, alert)
   </div>`;
 }
 
+let formatDate = function(date) {
+  var d = new Date(date),
+  month = '' + (d.getMonth() + 1),
+  day = '' + d.getDate(),
+  year = d.getFullYear();
+
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
+
+  return [year, month, day].join('-');
+};
+
 class Users {
   static onValidateUserRegiter()
   {
@@ -56,7 +68,7 @@ class Users {
 
     error_email.innerHTML     = '';
     error_password.innerHTML  = '';
-    
+
     if( email.value == '' )
     {
       document.querySelector('#error-email').innerHTML = divAlertMessage( errorMessage, 'error' );
@@ -69,5 +81,77 @@ class Users {
     }
 
     return ! iserror;
+  }
+}
+
+class Carts {
+  static async onCreateOrUpdate( url, product_id, price, qty, type )
+  {
+    let request = {
+      product_id: product_id,
+      qty: qty,
+      price: price,
+      type: type
+    };
+
+    let fetchData = await fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      cache: 'no-cache',
+      body: JSON.stringify(request),
+      headers: {
+        'content-type': 'application/json',
+        'x-requested-with': 'XMLHttpRequest',
+        'x-csrf-token': APP_TOKEN,
+      }
+    });
+
+    let result = fetchData.json();
+    return result;
+  }
+
+  static async onUpdateQty( url, item_cart_id, price, qty )
+  {
+    let request = {
+      item_cart_id: item_cart_id,
+      qty: qty,
+      price: price,
+    };
+
+    let fetchData = await fetch(url, {
+      method: 'put',
+      mode: 'cors',
+      cache: 'no-cache',
+      body: JSON.stringify(request),
+      headers: {
+        'content-type': 'application/json',
+        'x-requested-with': 'XMLHttpRequest',
+        'x-csrf-token': APP_TOKEN,
+      }
+    });
+
+    let result = fetchData.json();
+    return result;
+  }
+
+  static onDeleteCart( user_id )
+  {
+
+  }
+
+  static async onDeleteItem( url, item_id )
+  {
+    let fetchData = await fetch(`${url}/${item_id}`, {
+      method: 'delete',
+      mode: 'cors',
+      cache: 'no-cache',
+      headers: {
+        'x-requested-with': 'XMLHttpRequest',
+        'x-csrf-token': APP_TOKEN,
+      }
+    });
+
+    let result = fetchData.json();
+    return result;
   }
 }

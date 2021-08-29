@@ -8,7 +8,7 @@
       <div class="uk-navbar-left">
         <ul class="uk-navbar-nav">
           <li><a href="{{ route('backoffice.product.index') }}">Produk</a></li>
-          <li><a href="{{ url('/') }}">Transaksi</a></li>
+          <li><a href="{{ route('backoffice.transaction.index') }}">Transaksi</a></li>
           <li><a href="{{ url('/') }}">Laporan Transaksi</a></li>
           <li>
             <a href="javascript:void(0);">Users</a>

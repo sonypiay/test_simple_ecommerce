@@ -1,5 +1,6 @@
 @php
-  $getUserDetail = \App\Model\Users::getDetail();
+  $getUserDetail  = \App\Model\Users::getDetail();
+  $getTotalCart   = \App\Model\AT_Carts::getAll( $getUserDetail->id );
 @endphp
 
 <header class="uk-box-shadow-small">
@@ -14,10 +15,16 @@
       <div class="uk-navbar-right">
         <ul class="uk-navbar-nav">
           <li>
-            <a href="javascript:void(0);"><span uk-icon="icon: cart; ratio: .7"></span> Keranjang</a>
+            <a href="{{ route('frontend.user.carts.index') }}">
+              <span uk-icon="icon: cart; ratio: .7"></span>
+              Keranjang
+              <span id="nav_total_cart" class="uk-text-bold">
+                ({{ $getTotalCart->count() }})
+              </span>
+            </a>
           </li>
           <li>
-            <a href="javascript:void(0);"><span uk-icon="icon: bag; ratio: .7"></span> Transaksi</a>
+            <a href="{{ route('frontend.user.transaction.index') }}"><span uk-icon="icon: bag; ratio: .7"></span> Transaksi</a>
           </li>
           <li>
             <a href="javascript:void(0);"><span uk-icon="icon: user; ratio: .7"></span> {{ $getUserDetail->nama }}</a>

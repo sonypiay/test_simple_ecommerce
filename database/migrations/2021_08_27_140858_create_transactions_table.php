@@ -17,9 +17,8 @@ class CreateTransactionsTable extends Migration
             $table->uuid('id')->primary();
             $table->string('transaction_id', 20)->unique();
             $table->uuid('ref_user_id');
-            $table->unsignedInteger('total_price')->default(0);
-            $table->unsignedSmallInteger('total_item')->default(0);
-            $table->json('address_info');
+            $table->unsignedBigInteger('total_price')->default(0);
+            $table->unsignedSmallInteger('total_qty')->default(0);
             $table->timestamps();
 
             $table->engine = 'InnoDB';

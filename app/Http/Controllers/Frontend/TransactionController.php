@@ -4,11 +4,61 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use App\Helpers\GlobalFunction as HelperFunction;
+use App\Model\Users;
+use App\Model\Transactions;
+use App\Model\AT_Transactions;
 
 class TransactionController extends Controller
 {
-  public function index()
+  use HelperFunction;
+
+  private $status_alert   = '';
+  private $status_message = 'OK';
+  private $module_view    = 'frontend.modules.transaction';
+
+  public function index( Request $request, $transaction_id = null )
   {
-    return 'Halaman transaksi';
+    $getUserDetail  = Users::getDetail();
+
+    if( ! empty( $transaction_id ) )
+    {
+      $getDetailTransaction = Transactions::getDetail( $transaction_id );
+      $getItemTransaction   = AT_Transactions::getAll( $transaction_id );
+
+      if( ! $getDetailTransaction )
+      {
+        Session::flash('message', 'Transaksi tidak ditemukan.');
+        Session::flash('alert', 'error');
+
+        return redirect()->route('frontend.user.transaction.index');
+      }
+
+      $module_view    = $this->module_view . '.detail';
+
+      $data = [
+        'title_page'            => 'Transaksi ' . $getDetailTransaction->transaction_no,
+        'getDetailTransaction'  => $getDetailTransaction,
+        'getItemTransaction'    => $getItemTransaction,
+      ];
+    }
+    else
+    {
+      $keywords       = $request->keywords;
+      $start_date     = $request->start_date;
+      $end_date       = $request->end_date;
+
+      $module_view    = $this->module_view . '.index';
+      $getResult      = Transactions::getAll( $keywords, $start_date, $end_date, $getUserDetail->id );
+
+      $data = [
+        'title_page'    => 'Daftar Transaksi',
+        'getUserDetail' => $getUserDetail,
+        'getResult'     => $getResult,
+      ];
+    }
+
+    return $this->responseView( $module_view, $data );
   }
 }

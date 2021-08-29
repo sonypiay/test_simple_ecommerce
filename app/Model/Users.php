@@ -18,6 +18,10 @@ class Users extends Model
 
   public static function getAll( $keywords = '', $user_type = 'user' )
   {
+    $params = [
+      'keywords'    => $keywords,
+    ];
+
     $model = self::where(function( $query ) use ( $keywords ) {
       if( ! empty( $keywords ) )
       {
@@ -27,7 +31,8 @@ class Users extends Model
     })
     ->where('roles', $user_type)
     ->orderBy('created_at', 'desc')
-    ->paginate(10);
+    ->paginate(10)
+    ->appends( $params );
 
     return $model;
   }

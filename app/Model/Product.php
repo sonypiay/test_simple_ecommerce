@@ -13,6 +13,10 @@ class Product extends Model
 
   public static function getAll( $keywords = '' )
   {
+    $params = [
+      'keywords'    => $keywords,
+    ];
+
     $model = self::where(function( $query ) use ( $keywords ) {
       if( ! empty( $keywords ) )
       {
@@ -21,7 +25,8 @@ class Product extends Model
       }
     })
     ->orderBy('created_at', 'desc')
-    ->paginate(10);
+    ->paginate(10)
+    ->appends( $params );
 
     return $model;
   }
