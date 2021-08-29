@@ -10,3 +10,4 @@
 ## Halaman Login
 - User : {{hostname}}/login/user
 - Admin : {{hostname}}/login/admin
+- Password Admin (default) : 12345678
